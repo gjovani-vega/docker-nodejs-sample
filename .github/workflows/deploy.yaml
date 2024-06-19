@@ -3,7 +3,7 @@ name: deploy
 on:
   workflow_dispatch:
 
-job:
+jobs:
   push2registry:
     name: Push container to GHCR registry
     runs-on: ubuntu-latest
