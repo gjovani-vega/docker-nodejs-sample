@@ -1,0 +1,25 @@
+name: deploy
+
+on:
+  workflow_dispatch:
+
+job:
+  push2registry:
+    name: Push container to GHCR registry
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Docker build
+        run: docker build -t ghcr.io/gjovani-vega/docker-nodejs-sample:latest .
+
+      - name: Login to GitHub CR
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: gjovani-vega
+          password: ${{ secrets.GH_TOKEN }}
+
+      - name: Push container
+        run: docker push ghcr.io/gjovani-vega/docker-nodejs-sample:latest
