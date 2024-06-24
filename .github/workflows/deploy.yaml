@@ -20,6 +20,9 @@ jobs:
       - name: Docker build
         run: docker build -t ghcr.io/gjovani-vega/docker-nodejs-sample:v1.0.0 .
 
+      - name: Tag Docker image
+        run: docker tag v1.0.0 gjovani-vega/docker-nodejs-sample:v1.0.0
+
       - name: Login to GitHub CR
         uses: docker/login-action@v2
         with:
