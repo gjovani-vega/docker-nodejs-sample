@@ -2,6 +2,12 @@ name: deploy
 
 on:
   workflow_dispatch:
+    inputs:
+      image_tag:
+        description: 'image_tag'
+        default: 'latest'
+        required: true
+        type: string
 
   push:
     # branches:
