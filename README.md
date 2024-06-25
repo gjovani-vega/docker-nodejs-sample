@@ -13,3 +13,4 @@ prod (uses postgres container):
 ~~~
 docker-compose -f docker-compose.yaml up --build
 ~~~
+
