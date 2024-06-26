@@ -11,3 +11,9 @@ variable "all_tags" {
     "Owner" = "GjovaniMirdita"
   }
 }
+
+variable "repo_github" {
+  description = "GitHub repository"
+  type        = string
+  default     = "repo:gjovani-vega/docker-nodejs-sample*"
+}
