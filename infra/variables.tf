@@ -17,3 +17,11 @@ variable "repo_github" {
   type        = string
   default     = "repo:gjovani-vega/docker-nodejs-sample*"
 }
+
+variable "default_omega" {
+  description = "tags for all shared resources"
+  type        = map(string)
+  default = {
+    "Owner" = "Omega"
+  }
+}
