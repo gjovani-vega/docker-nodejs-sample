@@ -42,10 +42,35 @@ module "iam_policy" {
           "ecr:CompleteLayerUpload",
           "ecr:PutImage"
         ],
-        "Resource": "*"
+        "Resource": "${module.ecr.repository_arn}"
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "eks:ListClusters",
+          "eks:ListNodegroups",
+          "eks:DescribeCluster",
+          "eks:DescribeNodegroup"
+        ],
+        "Resource": "${module.eks.cluster_arn}"
       }
     ]
   }
   EOF
   tags          = var.all_tags
+}
+
+module "vpc_cni_irsa_role" {
+  source                = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
+  role_name             = "irsa-role-gjovani"
+  attach_vpc_cni_policy = true
+  vpc_cni_enable_ipv4   = true
+  oidc_providers = {
+    main = {
+      provider_arn               = module.iam_github_oidc_provider.arn
+      namespace_service_accounts = ["kube-system:ebs-csi-controller-sa"]
+    }
+  }
+
+  tags = var.all_tags
 }
