@@ -1,7 +1,7 @@
 module "iam_github_oidc_provider" {
   source         = "terraform-aws-modules/iam/aws//modules/iam-github-oidc-provider"
   client_id_list = ["sts.amazonaws.com"]
-  tags           = var.all_tags
+  tags           = var.default_omega
 }
 
 module "iam_iam-assumable-role-with-oidc" {
