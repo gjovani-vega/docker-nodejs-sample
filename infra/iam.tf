@@ -42,7 +42,7 @@ module "iam_policy" {
           "ecr:CompleteLayerUpload",
           "ecr:PutImage"
         ],
-        "Resource": "${module.ecr.repository_arn}"
+        "Resource": "*"
       },
       {
         "Effect": "Allow",
@@ -52,7 +52,7 @@ module "iam_policy" {
           "eks:DescribeCluster",
           "eks:DescribeNodegroup"
         ],
-        "Resource": "${module.eks.cluster_arn}"
+        "Resource": "*"
       }
     ]
   }
@@ -69,6 +69,19 @@ module "vpc_cni_irsa_role" {
     main = {
       provider_arn               = module.iam_github_oidc_provider.arn
       namespace_service_accounts = ["kube-system:ebs-csi-controller-sa"]
+    }
+  }
+
+  tags = var.all_tags
+}
+
+module "irsa_LB" {
+  source    = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
+  role_name = "irsa-role-gjovani-LB"
+  oidc_providers = {
+    main = {
+      provider_arn               = module.iam_github_oidc_provider.arn
+      namespace_service_accounts = ["kube-system:aws-load-balancer-controller"]
     }
   }
 
